@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     
     # custom apps
     "api",
-    "scheduler"
+    "scheduler",
+    
+    "django_celery_beat"
+    
 ]
 
 MIDDLEWARE = [
