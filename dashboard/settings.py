@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -129,3 +129,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CACHE_HOST = os.environ.get('CACHE_HOST','localhost')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://{}:6379'.format(CACHE_HOST),
+    }
+}
+
+# Celery settings
+CELERY_RESULT_BACKEND = 'redis://{}:6379/1'.format(CACHE_HOST)
+CELERY_BROKER_URL = 'redis://{}:6379/1'.format(CACHE_HOST)
+CELERY_TASK_TRACK_STARTED = True
+CELERY_RESULT_EXTENDED = True
+
+# Celery Logging configuration
+CELERY_WORKER_HIJACK_ROOT_LOGGER = False
