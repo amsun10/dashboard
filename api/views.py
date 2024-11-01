@@ -4,5 +4,6 @@ from django.http import JsonResponse
 def healthcheck(request):
     return JsonResponse({
         'status': 'OK',
-        'framework': 'Django'
+        'framework': 'Django',
+        'service_type': 'API'
     })
